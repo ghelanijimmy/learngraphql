@@ -29,6 +29,7 @@ services:
     environment:
       env_file: ./server/.env
       NODE_ENV: development
+      MONGO_URL: ${DB_HOST_PORT}
     volumes:
       - ./server:/usr/src/server:rw
     ports:

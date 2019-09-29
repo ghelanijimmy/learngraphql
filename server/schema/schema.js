@@ -1,5 +1,7 @@
 const graphql = require("graphql");
 const _ = require("lodash");
+const Book = require("../models/book");
+const Author = require("../models/author");
 
 const {
   GraphQLObjectType,
@@ -9,22 +11,6 @@ const {
   GraphQLInt,
   GraphQLList
 } = graphql;
-
-// DUMMY DATA
-let books = [
-  { name: "Name of the Wind", genre: "Fantasy", id: "1", authId: "1" },
-  { name: "The Final Empire", genre: "Fantasy", id: "2", authId: "2" },
-  { name: "The Long Earth", genre: "Sci-Fi", id: "3", authId: "3" },
-  { name: "The Hero of Ages", genre: "Fantasy", id: "4", authId: "2" },
-  { name: "The Colour of Magic", genre: "Fantasy", id: "5", authId: "3" },
-  { name: "The Light Fantastic", genre: "Fantasy", id: "6", authId: "3" }
-];
-
-let authors = [
-  { name: "Patrick Rothfuss", age: 44, id: "1" },
-  { name: "PBrandon Sanderson", age: 42, id: "2" },
-  { name: "Terry Pratchett", age: 66, id: "3" }
-];
 
 const AuthType = new GraphQLObjectType({
   name: "Author",
@@ -36,7 +22,7 @@ const AuthType = new GraphQLObjectType({
       type: new GraphQLList(BookType),
       resolve(parent, args) {
         console.log(parent);
-        return _.filter(books, { authId: parent.id });
+        // return _.filter(books, { authId: parent.id });
       }
     }
   })
@@ -52,7 +38,7 @@ const BookType = new GraphQLObjectType({
       type: AuthType,
       resolve(parent, args) {
         console.log(parent);
-        return _.find(authors, { id: parent.authId });
+        // return _.find(authors, { id: parent.authId });
       }
     }
   })
@@ -75,19 +61,19 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         console.log(parent);
-        return _.find(authors, { id: args.id });
+        // return _.find(authors, { id: args.id });
       }
     },
     books: {
       type: new GraphQLList(BookType),
       resolve(parent, args) {
-        return books;
+        // return books;
       }
     },
     authors: {
       type: new GraphQLList(AuthType),
       resolve(parent, args) {
-        return authors;
+        // return authors;
       }
     }
   }
