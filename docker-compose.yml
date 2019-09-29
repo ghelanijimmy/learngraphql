@@ -1,0 +1,50 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: ./app
+      args:
+        APP_PORT: ${APP_PORT}
+    environment:
+      env_file: ./app/.env
+      NODE_ENV: development
+    volumes:
+      - ./server:/usr/src/server:rw
+    ports:
+      - "${APP_HOST_PORT}:${APP_PORT}"
+    links:
+      - server
+    command: npm start
+
+  server:
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    build:
+      context: ./server
+      args:
+        SERVER_PORT: ${SERVER_PORT}
+    environment:
+      env_file: ./server/.env
+      NODE_ENV: development
+    volumes:
+      - ./server:/usr/src/server:rw
+    ports:
+      - "${SERVER_HOST_PORT}:${SERVER_PORT}"
+    command: npm start
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    container_name: mongodb
+    ports:
+      - "${DB_HOST_PORT}:${DB_PORT}"
+    environment:
+      env_file: ./db/.env
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data: {}

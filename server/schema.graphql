@@ -1,0 +1,15 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: RootQueryType
+}
+
+type Book {
+  genre: String
+  id: String
+  name: String
+}
+
+type RootQueryType {
+  book(id: String): Book
+}
