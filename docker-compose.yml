@@ -9,8 +9,9 @@ services:
     environment:
       env_file: ./app/.env
       NODE_ENV: development
+      PORT: ${APP_PORT}
     volumes:
-      - ./server:/usr/src/server:rw
+      - ./app:/usr/src/app:rw
     ports:
       - "${APP_HOST_PORT}:${APP_PORT}"
     links:
