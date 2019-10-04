@@ -11,7 +11,7 @@ services:
       NODE_ENV: development
       PORT: ${APP_PORT}
     volumes:
-      - ./app:/usr/src/app:rw
+      - ./app:/usr/src/app
     ports:
       - "${APP_HOST_PORT}:${APP_PORT}"
     links:
@@ -28,9 +28,9 @@ services:
       args:
         SERVER_PORT: ${SERVER_PORT}
     environment:
-      env_file: ./server/.env
       NODE_ENV: development
       MONGO_URL: ${DB_HOST_PORT}
+      SERVER_PORT: ${SERVER_PORT}
     volumes:
       - ./server:/usr/src/server:rw
     ports:
