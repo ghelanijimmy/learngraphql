@@ -47,6 +47,7 @@ services:
       env_file: ./db/.env
     volumes:
       - mongodb_data:/data/db
+      - ./db/backup:/data/backup
 
 volumes:
   mongodb_data: {}
