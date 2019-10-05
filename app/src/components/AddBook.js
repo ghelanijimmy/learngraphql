@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { graphql } from "react-apollo";
 import {
   getAuthorQuery,
@@ -38,6 +38,10 @@ const AuthorsList = props => {
     });
   };
 
+  useEffect(() => {
+    console.log(book);
+  }, [book]);
+
   return (
     <form id="add-book" onSubmit={submitForm}>
       <div className={"field"}>
@@ -46,7 +50,7 @@ const AuthorsList = props => {
           type="text"
           onChange={e => {
             e.persist();
-            setBook(old => Object.assign({}, old, { name: e.target.value }));
+            setBook({ ...book, name: e.target.value });
           }}
         />
       </div>
@@ -56,7 +60,7 @@ const AuthorsList = props => {
           type="text"
           onChange={e => {
             e.persist();
-            setBook(old => Object.assign({}, old, { genre: e.target.value }));
+            setBook({ ...book, genre: e.target.value });
           }}
         />
       </div>
@@ -68,7 +72,7 @@ const AuthorsList = props => {
           onChange={e => {
             e.persist();
             setBook(old =>
-              Object.assign({}, old, { authorId: e.target.value })
+              Object.assign({ ...book, authorId: e.target.value })
             );
           }}
         >
