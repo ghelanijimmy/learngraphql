@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { graphql } from "react-apollo";
 import {
   getAuthorQuery,
@@ -9,10 +9,6 @@ import { compose } from "recompose";
 
 const AuthorsList = props => {
   const [book, setBook] = useState({ name: "", genre: "", authorId: "" });
-
-  // useEffect(() => {
-  //   console.log(book);
-  // }, [book]);
 
   const displayAuthors = () => {
     let data = props.getAuthorsQuery;
