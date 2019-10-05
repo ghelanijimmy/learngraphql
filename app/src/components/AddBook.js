@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { graphql } from "react-apollo";
-import { getAuthorQuery } from "../queries/queries";
+import {
+  getAuthorQuery,
+  addBookMutation,
+  getBooksQuery
+} from "../queries/queries";
+import { compose } from "recompose";
 
 const AuthorsList = props => {
   const [book, setBook] = useState({ name: "", genre: "", authorId: "" });
@@ -10,7 +15,7 @@ const AuthorsList = props => {
   // }, [book]);
 
   const displayAuthors = () => {
-    let data = props.data;
+    let data = props.getAuthorsQuery;
 
     if (data.loading) {
       return <option>Loading Authors</option>;
@@ -27,7 +32,14 @@ const AuthorsList = props => {
 
   const submitForm = e => {
     e.preventDefault();
-    console.log(book);
+    props.addBookMutation({
+      variables: {
+        name: book.name,
+        genre: book.genre,
+        authorID: book.authorId
+      },
+      refetchQueries: [{ query: getBooksQuery }]
+    });
   };
 
   return (
@@ -73,4 +85,7 @@ const AuthorsList = props => {
   );
 };
 
-export default graphql(getAuthorQuery)(AuthorsList);
+export default compose(
+  graphql(getAuthorQuery, { name: "getAuthorsQuery" }),
+  graphql(addBookMutation, { name: "addBookMutation" })
+)(AuthorsList);
